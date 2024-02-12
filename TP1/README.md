@@ -1,4 +1,9 @@
 # PL2024 - TP1
+
+## Autor
+- *João Gomes Dias de Faria*
+- *A100553*
+
 ## Introdução
 Neste trabalho prático recebemos um CSV e temos de o processar e responder a algumas questões como:
 - Lista ordenada alfabeticamente das modalidades desportivas;
