@@ -12,7 +12,7 @@ Este script deve ser capaz de:
 - - Titulos e subtítulos pelos respectivos `<h1>`, `<h2>`, `<h3>`, `<h4>`, `<h5>` e `<h6>`;
 - - `*` por `<i>`;
 - - `**` por `<b>`;
-- - `numbered list` por `<il>` dentro de `<ol>`;
+- - `numbered list` por `<li>` dentro de `<ol>`;
 - - Imagens por `<img>`;
 - - Links por `<a>` com `href`;
 
