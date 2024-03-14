@@ -1,36 +1,16 @@
-stock = [
-    {"cod": "A23", "nome": "água", "quant": 8, "preco": 0.7},
-    {"cod": "B15", "nome": "refrigerante", "quant": 10, "preco": 1.2},
-    {"cod": "C02", "nome": "café", "quant": 6, "preco": 1.0},
-    {"cod": "D08", "nome": "presunto", "quant": 5, "preco": 2.5},
-    {"cod": "E10", "nome": "chocolate", "quant": 7, "preco": 1.5},
-    {"cod": "F04", "nome": "rissol", "quant": 9, "preco": 1.0},
-    {"cod": "G12", "nome": "cereais", "quant": 4, "preco": 0.8},
-    {"cod": "H09", "nome": "iogurte", "quant": 8, "preco": 1.3},
-    {"cod": "I11", "nome": "maçã", "quant": 10, "preco": 0.6},
-    {"cod": "J05", "nome": "banana", "quant": 7, "preco": 0.5},
-    {"cod": "K07", "nome": "biscoito", "quant": 6, "preco": 1.0},
-    {"cod": "L13", "nome": "sopa", "quant": 5, "preco": 1.2},
-    {"cod": "M01", "nome": "amendoins", "quant": 8, "preco": 0.9},
-    {"cod": "N03", "nome": "batatas", "quant": 7, "preco": 1.0},
-    {"cod": "O06", "nome": "barrinha", "quant": 6, "preco": 1.2},
-    {"cod": "P14", "nome": "sumo", "quant": 9, "preco": 1.0},
-    {"cod": "Q02", "nome": "pipoca", "quant": 8, "preco": 1.5},
-    {"cod": "R08", "nome": "bolacha belga", "quant": 7, "preco": 1.2},
-    {"cod": "S10", "nome": "tigela de frutas", "quant": 5, "preco": 2.0},
-    {"cod": "T15", "nome": "sanduíche", "quant": 6, "preco": 2.5},
-    {"cod": "U13", "nome": "bolo", "quant": 7, "preco": 0.8},
-]
+import json
 
 valores_moeda = ["1c", "2c", "5c", "10c", "20c", "50c", "1e", "2e"]
 
-saldo_inicial = 0
+saldo = 100
 
-def sair(saldo):
+def sair():
+    global saldo
     if(saldo > 0):
         print(f"maq: O seu saldo é de {saldo}€. Obrigado pela preferência!")
 
-def selecionar(stock, codigo, saldo):
+def selecionar(stock, codigo):
+    global saldo
     produto = None
     for p in stock:
         if p['cod'] == codigo:
@@ -41,9 +21,13 @@ def selecionar(stock, codigo, saldo):
         return
     else:
         if produto['quant'] > 0:
-            if saldo >= produto['preco']:
+            if saldo >= produto['preco']*100:
                 saldo -= produto['preco']*100
                 produto['quant'] -= 1
+                #Escrever no ficheiro
+                file = open("stock.json", "w")
+                json.dump(stock, file, indent=4)
+                file.close()
                 if saldo < 100:
                     print(f"maq: Produto {produto['nome']} selecionado. Saldo restante: {saldo}c")
                     return saldo
@@ -78,7 +62,7 @@ def selecionar(stock, codigo, saldo):
 
 
 def listar(stock):
-    #Criar tabela com espaços iguais para cada coluna e texto centrado
+    global saldo
     print("cod |       nome       | quantidade | preço")
     print("--- |------------------|------------|------")
     for produto in stock:
@@ -86,23 +70,46 @@ def listar(stock):
             print(f"{produto['cod']} | {produto['nome']:16} | {produto['quant']:10} | {produto['preco']:5}")
 
 
+def moeda(moedas, valores_moeda):
+    global saldo
+    for moeda in moedas:
+        if moeda in valores_moeda:
+            valor = int(moeda[:-1])
+            if moeda[-1] == "c":
+                saldo += valor
+            else:
+                saldo += valor*100
+        else:
+            print("Moeda inválida")
+            return saldo
+
 def working(stock, valores_moeda):
-    saldo = saldo_inicial
+    global saldo
     print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
     print("==========VENDING MACHINE==========")
     while(True):
         entrada = input(">>> ")
+
         if entrada == "LISTAR" :
             listar(stock)
+
         elif entrada == "SAIR" :
             saldo = sair(saldo)
+
         elif entrada.startswith("SELECIONAR") :
             codigo = entrada.split(" ")[1]
-            selecionar(stock, codigo, saldo)
+            selecionar(stock, codigo)
+        
+        elif entrada.startswith("MOEDA") :
+            moedas = entrada.split(" ")[1:]
+            moeda(moedas, valores_moeda)
                         
         else:
             print("Comando inválido")
 
 
 if __name__ == "__main__":
+    file = open("stock.json", "r")
+    stock = json.load(file)
+    file.close()
     working(stock, valores_moeda)
