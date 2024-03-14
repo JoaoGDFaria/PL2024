@@ -2,8 +2,8 @@
 
 ## Enunciado Vending Machine
 
-Construir um programa que simule uma máquina de vending e que aceite os comandos de listar produto, depositar moedas, selecionar produtos e sair.
-Desenvolvi com e sem analisador léxico.
+Construir um programa de uma máquina de venda automática simulada com funcionalidades básicas de adicionar moedas, listar produtos, selecionar produtos e sair.
+Foi desenvolvido com e sem analisador léxico.
 
 ## Ficheiro `vending_machine.py`
 
@@ -11,33 +11,27 @@ O ficheiro `vending_machine.py` implementa uma máquina de venda automática sim
 
 ### **Funcionalidades**
 
-- Listar Produtos:
-
-Comando: `LISTAR`
+- Listar Produtos => Comando: `LISTAR`
 
 Este comando exibe uma lista de produtos disponíveis, juntamente com suas quantidades e preços.
 
-- Selecionar Produto
-
-Comando: `SELECIONAR <código>`
+- Selecionar Produto => Comando: `SELECIONAR <código>`
 
 Este comando permite selecionar um produto com base no seu código. Ele verifica se o produto está disponível e se há saldo suficiente para a compra.
 
-- Inserir Moeda
-
-Comando: `MOEDA <moeda1> <moeda2> ...`
+- Inserir Moeda +> Comando: `MOEDA <moeda1> <moeda2> ...`
 
 Este comando permite inserir moedas na máquina. Aceita moedas de 1c, 2c, 5c, 10c, 20c, 50c, 1€ e 2€.
 
-- Sair
-
-Comando: `SAIR`
+- Sair => Comando: `SAIR`
 
 Este comando finaliza a sessão na máquina de venda automática, exibindo o saldo final.
 
 
 
 ## Ficheiro `lex_vending_machine.py`
+
+Este ficheiro tem as mesmas funcionalidades que o anterior, mas construído usando análise léxica.
 
 ### **Estrutura do Código**
 
@@ -55,6 +49,4 @@ Este comando finaliza a sessão na máquina de venda automática, exibindo o sal
 - **Calcular Troco**: A função `calcular_troco()` é chamada quando o usuário decide sair da máquina com saldo, calculando e exibindo o troco apropriado.
 - **Ficheiro JSON**: O código faz uso de um arquivo JSON (`stock.json`) para armazenar e recuperar informações sobre o stock de produtos.
 
-## Conclusão
-O código `lex_vending_machine.py` implementa uma máquina de venda automática simulada com funcionalidades básicas de adicionar moedas, listar produtos, selecionar produtos e calcular troco. Ele demonstra o uso do analisador léxico fornecido pela biblioteca `ply` para processar tokens de entrada de usuário em uma máquina de estados finitos.
 
